@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Constanst should always start with the prefix 'k' to distinguish them from others.
+/// Constants should always start with the prefix 'k' to distinguish them from others.
 
 /// Even dart's internal constants are defined om the same fashion.
 

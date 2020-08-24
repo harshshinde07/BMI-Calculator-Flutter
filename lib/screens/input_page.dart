@@ -1,13 +1,18 @@
+import 'package:bmi_calculator/bmi_calculate_brain.dart';
 import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/icon_content.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
+import 'package:bmi_calculator/constants.dart';
+import 'package:bmi_calculator/database/database.dart';
+import 'package:bmi_calculator/models/record.dart';
+import 'package:bmi_calculator/screens/history_page.dart';
 import 'package:bmi_calculator/screens/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bmi_calculator/components/icon_content.dart';
-import 'package:bmi_calculator/components/reusable_card.dart';
-import 'package:bmi_calculator/constants.dart';
+import 'package:intl/intl.dart';
+
 import 'results_page.dart';
-import 'package:bmi_calculator/components/round_icon_button.dart';
-import 'package:bmi_calculator/bmi_calculate_brain.dart';
 
 enum Gender {
   male,
@@ -20,36 +25,29 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  // Color maleCardColor = inactiveCardColor;
-  // Color femaleCardColor = inactiveCardColor;
-
-  Gender selectedGender;
+  Gender selectedGender = Gender.male;
   int heightValue = 180;
   int weightValue = 60;
   int ageValue = 20;
 
-  // void updateColor(Gender selectedGender) {
-  //   if (selectedGender == Gender.male) {
-  //     if (maleCardColor == inactiveCardColor) {
-  //       maleCardColor = activeCardColor;
-  //       femaleCardColor = inactiveCardColor;
-  //     } else
-  //       maleCardColor = inactiveCardColor;
-  //   }
-  //   if (selectedGender == Gender.female) {
-  //     if (femaleCardColor == inactiveCardColor) {
-  //       femaleCardColor = activeCardColor;
-  //       maleCardColor = inactiveCardColor;
-  //     } else
-  //       femaleCardColor = inactiveCardColor;
-  //   }
-  // }
+  DatabaseProvider provider = new DatabaseProvider();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI CALCULATOR'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.view_list),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return HistoryPage();
+              }));
+            },
+          ),
+        ],
       ),
       body: Container(
         child: Column(
@@ -65,7 +63,12 @@ class _InputPageState extends State<InputPage> {
                           ? activeCardColor
                           : inactiveCardColor,
                       cardChild: IconContent(
-                          label: 'MALE', icon: FontAwesomeIcons.mars),
+                        label: 'MALE',
+                        icon: FontAwesomeIcons.mars,
+                        iconColor: selectedGender == Gender.male
+                            ? Colors.white
+                            : Color(0xFF8D8E98),
+                      ),
                       onPress: () {
                         setState(() {
                           selectedGender = Gender.male;
@@ -79,7 +82,12 @@ class _InputPageState extends State<InputPage> {
                           ? activeCardColor
                           : inactiveCardColor,
                       cardChild: IconContent(
-                          label: 'FEMALE', icon: FontAwesomeIcons.venus),
+                        label: 'FEMALE',
+                        icon: FontAwesomeIcons.venus,
+                        iconColor: selectedGender == Gender.female
+                            ? Colors.white
+                            : Color(0xFF8D8E98),
+                      ),
                       onPress: () {
                         setState(() {
                           selectedGender = Gender.female;
@@ -146,7 +154,19 @@ class _InputPageState extends State<InputPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text('WEIGHT', style: textLabelStyle),
-                          Text(weightValue.toString(), style: kNumberTextStyle),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(weightValue.toString(),
+                                  style: kNumberTextStyle),
+                              Text(
+                                'kg',
+                                style: textLabelStyle,
+                              ),
+                            ],
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -216,15 +236,27 @@ class _InputPageState extends State<InputPage> {
             ),
             BottomButton(
               buttonTitle: 'CALCULATE',
-              onTap: () {
+              onTap: () async {
                 BMIBrain calc =
                     BMIBrain(height: heightValue, weight: weightValue);
+
+                DateTime now = DateTime.now();
+                DateFormat dateFormat = DateFormat("dd-MM-yyyy hh:mm a");
+                String timestamp = dateFormat.format(now);
+                final bmi = calc.calculateBMI();
+                final result = calc.getResult();
+                Record record = new Record(
+                    date: timestamp,
+                    bmi: double.parse(bmi),
+                    gender: selectedGender == Gender.male ? 'male' : 'female',
+                    type: result);
+                await provider.insertRecord(record);
 
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return ResultsPage(
-                    bmiResult: calc.calculateBMI(),
-                    resultText: calc.getResult(),
+                    bmiResult: bmi,
+                    resultText: result,
                     interpretation: calc.getInterpretation(),
                   );
                 }));
