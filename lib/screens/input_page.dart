@@ -34,6 +34,10 @@ class _InputPageState extends State<InputPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height -
+        56 - // app bar height
+        70 - // bottom button height
+        72; // card margins
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI CALCULATOR'),
@@ -59,6 +63,7 @@ class _InputPageState extends State<InputPage> {
                 children: <Widget>[
                   Expanded(
                     child: ReusableCard(
+                      height: screenHeight / 3,
                       colour: selectedGender == Gender.male
                           ? activeCardColor
                           : inactiveCardColor,
@@ -78,6 +83,7 @@ class _InputPageState extends State<InputPage> {
                   ),
                   Expanded(
                     child: ReusableCard(
+                      height: screenHeight / 3,
                       colour: selectedGender == Gender.female
                           ? activeCardColor
                           : inactiveCardColor,
@@ -100,6 +106,7 @@ class _InputPageState extends State<InputPage> {
             ),
             Expanded(
               child: ReusableCard(
+                height: screenHeight / 3,
                 colour: activeCardColor,
                 cardChild: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -149,6 +156,7 @@ class _InputPageState extends State<InputPage> {
                 children: <Widget>[
                   Expanded(
                     child: ReusableCard(
+                      height: screenHeight / 3,
                       colour: activeCardColor,
                       cardChild: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -197,6 +205,7 @@ class _InputPageState extends State<InputPage> {
                   ),
                   Expanded(
                     child: ReusableCard(
+                      height: screenHeight / 3,
                       colour: activeCardColor,
                       cardChild: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

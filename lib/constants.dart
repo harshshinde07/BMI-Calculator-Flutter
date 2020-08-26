@@ -12,6 +12,12 @@ const activeCardColor = Color(0xFF1D1E33);
 const inactiveCardColor = Color(0xFF111328);
 const bottomContainerColor = Color(0xFFEB1555);
 
+const level1Color = Color(0xFF00FF00);
+const level2Color = Color(0xFF9FFF00);
+const level3Color = Color(0xFFFFFF00);
+const level4Color = Color(0xFFFF6900);
+const level5Color = Color(0xFFFF0000);
+
 const textLabelStyle = TextStyle(color: Color(0xFF8D8E98), fontSize: 18.0);
 const iconSize = 80.0;
 const iconTextSpacing = 15.0;
@@ -30,7 +36,7 @@ const kLargeButtonTextStyle = TextStyle(
 );
 
 const kTitleTextStyle = TextStyle(
-  fontSize: 50.0,
+  fontSize: 48.0,
   fontWeight: FontWeight.bold,
 );
 

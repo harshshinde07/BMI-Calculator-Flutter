@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:bmi_calculator/constants.dart';
-import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
+import 'package:bmi_calculator/constants.dart';
+import 'package:flutter/material.dart';
 
 class ResultsPage extends StatelessWidget {
   final String bmiResult;
@@ -15,6 +15,60 @@ class ResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height -
+        56 - // app bar height
+        70 - // bottom button height
+        54; // all margins
+
+    var style;
+
+    switch (resultText) {
+      case 'Obese Class III':
+        {
+          style = kResultTextStyle.copyWith(color: level5Color);
+
+          break;
+        }
+      case 'Obese Class II':
+        {
+          style = kResultTextStyle.copyWith(color: level4Color);
+
+          break;
+        }
+      case 'Obese Class I':
+        {
+          style = kResultTextStyle.copyWith(color: level3Color);
+
+          break;
+        }
+      case 'Overweight':
+        {
+          style = kResultTextStyle.copyWith(color: level2Color);
+
+          break;
+        }
+      case 'Underweight':
+        {
+          style = kResultTextStyle.copyWith(color: level3Color);
+
+          break;
+        }
+      case 'Severely Underweight':
+        {
+          style = kResultTextStyle.copyWith(color: level4Color);
+
+          break;
+        }
+      case 'Very Severely Underweight':
+        {
+          style = kResultTextStyle.copyWith(color: level5Color);
+
+          break;
+        }
+      default:
+        style = kResultTextStyle;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI CALCULATOR'),
@@ -36,6 +90,7 @@ class ResultsPage extends StatelessWidget {
           Expanded(
             flex: 5,
             child: ReusableCard(
+              height: screenHeight * (4 / 5),
               colour: activeCardColor,
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -43,7 +98,7 @@ class ResultsPage extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     resultText.toUpperCase(),
-                    style: kResultTextStyle,
+                    style: style,
                   ),
                   Text(
                     bmiResult,
