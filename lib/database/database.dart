@@ -32,11 +32,12 @@ class DatabaseProvider {
   }
 
   Future<List<Record>> getAllRecords() async {
-    final List<Map<String, dynamic>> maps = await database.query(recordTable);
+    final List<Map<String, dynamic>> maps =
+        await database.query(recordTable, orderBy: 'date DESC');
 
     return List.generate(maps.length, (i) {
       return Record(
-//        id: maps[i]['id'],
+        id: maps[i]['id'],
         date: maps[i]['date'],
         gender: maps[i]['gender'],
         bmi: maps[i]['bmi'],
@@ -49,5 +50,13 @@ class DatabaseProvider {
     var x = await database.rawQuery('SELECT COUNT (*) from $recordTable');
     int count = Sqflite.firstIntValue(x);
     return count;
+  }
+
+  Future<void> deleteRecord(int id) async {
+    await database.delete(
+      recordTable,
+      where: "id = ?",
+      whereArgs: [id],
+    );
   }
 }

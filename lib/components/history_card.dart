@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HistoryCard extends StatelessWidget {
-  HistoryCard({this.time, this.gender, this.bmi, this.type});
+  HistoryCard(
+      {this.time, this.gender, this.bmi, this.type, this.onPressDelete});
 
   final String gender, type;
   final time;
   final double bmi;
+  final Function onPressDelete;
   @override
   Widget build(BuildContext context) {
     return ReusableCard(
@@ -56,9 +58,10 @@ class HistoryCard extends StatelessWidget {
               Text(type, style: kResultTextStyle.copyWith(fontSize: 20.0)),
             ],
           ),
-//          trailing: Text(time,
-//              style: textLabelStyle.copyWith(
-//                  fontSize: 11.0, color: Colors.white70),),
+          trailing: IconButton(
+            icon: Icon(Icons.delete_forever, color: Colors.white),
+            onPressed: onPressDelete,
+          ),
         ),
       ),
     );

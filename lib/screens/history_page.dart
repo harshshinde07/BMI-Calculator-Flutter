@@ -36,11 +36,17 @@ class _HistoryPageState extends State<HistoryPage> {
               ));
             }
             return ListView.builder(
-              reverse: true,
+              shrinkWrap: true,
+//              reverse: true,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 Record record = snapshot.data[index];
                 return HistoryCard(
+                  onPressDelete: () {
+                    setState(() {
+                      provider.deleteRecord(record.id);
+                    });
+                  },
                   type: record.type,
                   gender: record.gender,
                   bmi: record.bmi,
