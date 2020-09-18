@@ -19,47 +19,47 @@ class HistoryCard extends StatelessWidget {
       case 'Obese Class III':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 20.0, color: level5Color);
+              kResultTextStyle.copyWith(fontSize: 16.0, color: level5Color);
           break;
         }
       case 'Obese Class II':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 20.0, color: level4Color);
+              kResultTextStyle.copyWith(fontSize: 16.0, color: level4Color);
           break;
         }
       case 'Obese Class I':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 20.0, color: level3Color);
+              kResultTextStyle.copyWith(fontSize: 16.0, color: level3Color);
           break;
         }
       case 'Overweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 20.0, color: level2Color);
+              kResultTextStyle.copyWith(fontSize: 16.0, color: level2Color);
           break;
         }
       case 'Underweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 20.0, color: level3Color);
+              kResultTextStyle.copyWith(fontSize: 16.0, color: level3Color);
           break;
         }
       case 'Severely Underweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 20.0, color: level4Color);
+              kResultTextStyle.copyWith(fontSize: 16.0, color: level4Color);
           break;
         }
       case 'Very Severely Underweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 20.0, color: level5Color);
+              kResultTextStyle.copyWith(fontSize: 16.0, color: level5Color);
           break;
         }
       default:
-        kStyle = kResultTextStyle.copyWith(fontSize: 20.0);
+        kStyle = kResultTextStyle.copyWith(fontSize: 16.0);
     }
 
     return ReusableCard(
