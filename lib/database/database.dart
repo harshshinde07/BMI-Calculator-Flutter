@@ -13,7 +13,7 @@ class DatabaseProvider {
     database =
         await openDatabase(join(await getDatabasesPath(), 'bmi_records.db'));
     await database.execute(
-        "CREATE TABLE IF NOT EXISTS $recordTable (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, gender TEXT, bmi REAL, type TEXT)");
+        "CREATE TABLE IF NOT EXISTS $recordTable (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, gender TEXT, bmi REAL, type TEXT, height INTEGER, weight INTEGER, age INTEGER)");
     print("Database created successfully");
   }
 
@@ -42,6 +42,9 @@ class DatabaseProvider {
         gender: maps[i]['gender'],
         bmi: maps[i]['bmi'],
         type: maps[i]['type'],
+        height: maps[i]['height'],
+        weight: maps[i]['weight'],
+        age: maps[i]['age'],
       );
     });
   }

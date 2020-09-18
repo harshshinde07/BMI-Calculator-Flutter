@@ -5,12 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HistoryCard extends StatelessWidget {
   HistoryCard(
-      {this.time, this.gender, this.bmi, this.type, this.onPressDelete});
+      {this.time, this.gender, this.bmi, this.type, this.height, this.weight, this.age, this.onPressDelete});
 
   final String gender, type;
   final time;
   final double bmi;
   final Function onPressDelete;
+  final int height, weight, age;
+
   @override
   Widget build(BuildContext context) {
     var kStyle;
@@ -19,120 +21,126 @@ class HistoryCard extends StatelessWidget {
       case 'Obese Class III':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 16.0, color: level5Color);
+              kTypeTextStyle.copyWith(color: level5Color);
           break;
         }
       case 'Obese Class II':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 16.0, color: level4Color);
+              kTypeTextStyle.copyWith(color: level4Color);
           break;
         }
       case 'Obese Class I':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 16.0, color: level3Color);
+              kTypeTextStyle.copyWith(color: level3Color);
           break;
         }
       case 'Overweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 16.0, color: level2Color);
+              kTypeTextStyle.copyWith(color: level2Color);
           break;
         }
       case 'Underweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 16.0, color: level3Color);
+              kTypeTextStyle.copyWith(color: level3Color);
           break;
         }
       case 'Severely Underweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 16.0, color: level4Color);
+              kTypeTextStyle.copyWith(color: level4Color);
           break;
         }
       case 'Very Severely Underweight':
         {
           kStyle =
-              kResultTextStyle.copyWith(fontSize: 16.0, color: level5Color);
+              kTypeTextStyle.copyWith(color: level5Color);
           break;
         }
       default:
-        kStyle = kResultTextStyle.copyWith(fontSize: 16.0);
+        kStyle = kTypeTextStyle;
     }
 
     return ReusableCard(
       colour: activeCardColor,
       cardChild: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Stack(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(
-              leading: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  gender == 'male'
-                      ? Icon(
-                          FontAwesomeIcons.mars,
-                          size: 32.0,
-                        )
-                      : Icon(
-                          FontAwesomeIcons.venus,
-                          size: 32.0,
-                        ),
-                  SizedBox(
-                    height: 2.0,
-                  ),
-                  gender == 'male'
-                      ? Text('Male',
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      gender == 'male'
+                          ? Icon(
+                        FontAwesomeIcons.mars,
+                        size: 32.0,
+                      )
+                          : Icon(
+                        FontAwesomeIcons.venus,
+                        size: 32.0,
+                      ),
+                      SizedBox(
+                        height: 2.0,
+                      ),
+                      gender == 'male'
+                          ? Text('Male',
                           style: kBodyTextStyle.copyWith(fontSize: 18.0))
-                      : Text('Female',
+                          : Text('Female',
                           style: kBodyTextStyle.copyWith(fontSize: 18.0)),
-                ],
-              ),
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    time,
-                    style: textLabelStyle.copyWith(
-                        fontSize: 13.0, color: Colors.white),
+                    ],
                   ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Text('BMI: $bmi',
-                      style: kBodyTextStyle.copyWith(color: Colors.white)),
-                  SizedBox(
-                    height: 4.0,
-                  ),
-                  Text(type, style: kStyle),
-                ],
-              ),
-//          trailing:
-//          IconButton(
-//            icon: Icon(
-//              Icons.delete_forever,
-//              color: Colors.white,
-//              size: 16.0,
-//            ),
-//            onPressed: onPressDelete,
-//          ),
-            ),
-            Positioned(
-              top: 0,
-              right: 8,
-              child: IconButton(
-                icon: Icon(
-                  Icons.delete_forever,
-                  color: Colors.white,
                 ),
-                onPressed: onPressDelete,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      time,
+                      style: textLabelStyle.copyWith(
+                          fontSize: 13.0, color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text('BMI: $bmi',
+                        style: kBodyTextStyle.copyWith(color: Colors.white)),
+                    SizedBox(
+                      height: 4.0,
+                    ),
+                    Text(type, style: kStyle),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete_forever,
+                    color: Colors.white,
+                  ),
+                  onPressed: onPressDelete,
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Height: $height', style: kDetailsTextStyle,),
+                  Text('Weight: $weight', style: kDetailsTextStyle),
+                  Text('Age: $age', style: kDetailsTextStyle),
+                ],
               ),
             ),
           ],
-//          child:
         ),
       ),
     );

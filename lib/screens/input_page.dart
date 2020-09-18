@@ -258,7 +258,11 @@ class _InputPageState extends State<InputPage> {
                     date: timestamp,
                     bmi: double.parse(bmi),
                     gender: selectedGender == Gender.male ? 'male' : 'female',
-                    type: result);
+                    type: result,
+                    height: heightValue,
+                    weight: weightValue,
+                    age: ageValue
+                );
                 await provider.insertRecord(record);
 
                 Navigator.push(context,

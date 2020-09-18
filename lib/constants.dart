@@ -46,6 +46,17 @@ const kResultTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const kTypeTextStyle = TextStyle(
+  color: Color(0xFF24D876),
+  fontSize: 16.0,
+  fontWeight: FontWeight.bold,
+);
+
+const kDetailsTextStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 16.0,
+);
+
 const kBMITextStyle = TextStyle(
   fontSize: 100.0,
   fontWeight: FontWeight.bold,

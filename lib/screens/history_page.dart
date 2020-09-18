@@ -51,6 +51,9 @@ class _HistoryPageState extends State<HistoryPage> {
                   gender: record.gender,
                   bmi: record.bmi,
                   time: record.date,
+                  height: record.height,
+                  weight: record.weight,
+                  age: record.age
                 );
               },
             );
