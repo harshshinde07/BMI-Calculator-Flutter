@@ -3,11 +3,32 @@ import 'dart:async';
 import 'package:bmi_calculator/models/record.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_migration/sqflite_migration.dart';
+
+const recordTable = "Records";
+
+final initialScript = [
+  '''
+  CREATE TABLE IF NOT EXISTS $recordTable (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, gender TEXT, bmi REAL, type TEXT)
+  '''
+];
+
+final migrations = [
+  '''
+  ALTER TABLE $recordTable ADD COLUMN height INTEGER;
+  ''',
+  '''
+  ALTER TABLE $recordTable ADD COLUMN weight INTEGER;
+  ''',
+  '''
+  ALTER TABLE $recordTable ADD COLUMN age INTEGER;
+  ''',
+];
+
+final config = MigrationConfig(initializationScript: initialScript, migrationScripts: migrations);
 
 class DatabaseProvider {
   static Database database;
-
-  var recordTable = "Records";
 
   Future createDatabase() async {
     database =
@@ -17,9 +38,15 @@ class DatabaseProvider {
     print("Database created successfully");
   }
 
+  // Future open() async {
+  //   database =
+  //       await openDatabase(join(await getDatabasesPath(), 'bmi_records.db'));
+  //   print("Database opened successfully");
+  // }
+
   Future open() async {
-    database =
-        await openDatabase(join(await getDatabasesPath(), 'bmi_records.db'));
+    final path = join(await getDatabasesPath(), 'bmi_records.db');
+    database = await openDatabaseWithMigration(path, config);
     print("Database opened successfully");
   }
 

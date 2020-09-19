@@ -7,7 +7,7 @@ import 'constants.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseProvider provider = new DatabaseProvider();
-  await provider.createDatabase();
+  // await provider.createDatabase();
   provider.open();
   runApp(BMICalculator());
 }
